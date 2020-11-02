@@ -134,6 +134,7 @@ class MyWindowClass(QMainWindow, form_class):
 
             img = cv2.resize(img, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            print(img.shape)
             height, width, bpc = img.shape
             bpl = bpc * width
             image = QImage(img.data, width, height, bpl, QImage.Format_RGB888)
