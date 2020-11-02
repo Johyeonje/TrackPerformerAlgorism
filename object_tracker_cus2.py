@@ -256,16 +256,22 @@ class Apply_Models(object):
         is_only_one = []
 
         if len(temp) == 1 and match_person == 3:
+            print('if len(temp) == 1 and match_person == 3:')
             if self.person1.is_used == 0:
+                print('if self.person1.is_used == 0:')
                 is_only_one.append(1)
             if self.person2.is_used == 0:
+                print('if self.person2.is_used == 0:')
                 is_only_one.append(2)
             if self.person3.is_used == 0:
+                print('if self.person3.is_used == 0:')
                 is_only_one.append(3)
             if self.person4.is_used == 0:
+                print('if self.person4.is_used == 0:')
                 is_only_one.append(4)
 
             if len(is_only_one) == 1:
+                print('if len(is_only_one) == 1:')
                 if is_only_one[0] == 1:
                     self.person1.centerX, self.person1.centerY = self.getCenter(temp[0][1])
                     self.person1.index_stack.append(temp[0][0])
@@ -292,7 +298,7 @@ class Apply_Models(object):
                     match_person += 1
 
         if match_person < 3:
-            print('=========', match_person)
+            print('if match_person < 3:', match_person)
             for tmp in temp:
                 compare_list = []
                 print(tmp)
