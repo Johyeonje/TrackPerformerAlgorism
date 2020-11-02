@@ -291,9 +291,6 @@ class Apply_Models(object):
                     self.person4.is_used = 1
                     match_person += 1
 
-
-
-
         if match_person < 3:
             print('=========', match_person)
             for tmp in temp:
@@ -322,19 +319,19 @@ class Apply_Models(object):
                 if compare_list[min_idx][0] == 1:
                     self.person1.is_used = 1
                     self.person1.index_stack.append(compare_list[min_idx][1])
-                    print(self.person1.index_stack)
+                    print('switch with XY-', self.person1.index_stack)
                 elif compare_list[min_idx][0] == 2:
                     self.person2.is_used = 1
                     self.person2.index_stack.append(compare_list[min_idx][1])
-                    print(self.person2.index_stack)
+                    print('switch with XY-', self.person2.index_stack)
                 elif compare_list[min_idx][0] == 3:
                     self.person3.is_used = 1
                     self.person3.index_stack.append(compare_list[min_idx][1])
-                    print(self.person3.index_stack)
+                    print('switch with XY-', self.person3.index_stack)
                 elif compare_list[min_idx][0] == 4:
                     self.person4.is_used = 1
                     self.person4.index_stack.append(compare_list[min_idx][1])
-                    print(self.person4.index_stack)
+                    print('switch with XY-', self.person4.index_stack)
                 else:
                     print("something problem in matching with center")
 
