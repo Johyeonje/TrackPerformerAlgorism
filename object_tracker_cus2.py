@@ -37,10 +37,11 @@ class Allocate(object):
     def is_exist(self, track_id):
         if track_id in self.index_stack:
             if track_id != self.index_stack[0]:
-                print('$$$', track_id, '->', self.index_stack)
+                print('index matched : ', track_id, '->', self.index_stack[0], self.index_stack)
             return True
         else:
             return False
+
 
 class Apply_Models(object):
     def __init__(self):
@@ -228,22 +229,22 @@ class Apply_Models(object):
 
             if self.person1.is_exist(track.track_id):
                 self.person1.centerX, self.person1.centerY = self.getCenter(bbox)
-                self.draw_box(frame_data, self.person1.index_stack[0], colors, bbox, class_name)
+                self.draw_box(frame_data, self.person1.index_stack[0], colors, bbox)
                 self.person1.is_used = 1
                 match_person += 1
             elif self.person2.is_exist(track.track_id):
                 self.person2.centerX, self.person2.centerY = self.getCenter(bbox)
-                self.draw_box(frame_data, self.person2.index_stack[0], colors, bbox, class_name)
+                self.draw_box(frame_data, self.person2.index_stack[0], colors, bbox)
                 self.person2.is_used = 1
                 match_person += 1
             elif self.person3.is_exist(track.track_id):
                 self.person3.centerX, self.person3.centerY = self.getCenter(bbox)
-                self.draw_box(frame_data, self.person3.index_stack[0], colors, bbox, class_name)
+                self.draw_box(frame_data, self.person3.index_stack[0], colors, bbox)
                 self.person3.is_used = 1
                 match_person += 1
             elif self.person4.is_exist(track.track_id):
                 self.person4.centerX, self.person4.centerY = self.getCenter(bbox)
-                self.draw_box(frame_data, self.person4.index_stack[0], colors, bbox, class_name)
+                self.draw_box(frame_data, self.person4.index_stack[0], colors, bbox)
                 self.person4.is_used = 1
                 match_person += 1
             else:
@@ -252,7 +253,48 @@ class Apply_Models(object):
 
         temp = np.array(temp)
 
-        if match_person < 4:
+        is_only_one = []
+
+        if len(temp) == 1 and match_person == 3:
+            if self.person1.is_used == 0:
+                is_only_one.append(1)
+            if self.person2.is_used == 0:
+                is_only_one.append(2)
+            if self.person3.is_used == 0:
+                is_only_one.append(3)
+            if self.person4.is_used == 0:
+                is_only_one.append(4)
+
+            if len(is_only_one) == 1:
+                if is_only_one[0] == 1:
+                    self.person1.centerX, self.person1.centerY = self.getCenter(temp[0][1])
+                    self.person1.index_stack.append(temp[0][0])
+                    self.draw_box(frame_data, self.person1.index_stack[0], colors, temp[0][1])
+                    self.person1.is_used = 1
+                    match_person += 1
+                elif is_only_one[0] == 2:
+                    self.person2.centerX, self.person2.centerY = self.getCenter(temp[0][1])
+                    self.person2.index_stack.append(temp[0][0])
+                    self.draw_box(frame_data, self.person2.index_stack[0], colors, temp[0][1])
+                    self.person2.is_used = 1
+                    match_person += 1
+                elif is_only_one[0] == 3:
+                    self.person3.centerX, self.person3.centerY = self.getCenter(temp[0][1])
+                    self.person3.index_stack.append(temp[0][0])
+                    self.draw_box(frame_data, self.person3.index_stack[0], colors, temp[0][1])
+                    self.person3.is_used = 1
+                    match_person += 1
+                elif is_only_one[0] == 4:
+                    self.person4.centerX, self.person4.centerY = self.getCenter(temp[0][1])
+                    self.person4.index_stack.append(temp[0][0])
+                    self.draw_box(frame_data, self.person4.index_stack[0], colors, temp[0][1])
+                    self.person4.is_used = 1
+                    match_person += 1
+
+
+
+
+        if match_person < 3:
             print('=========', match_person)
             for tmp in temp:
                 compare_list = []
