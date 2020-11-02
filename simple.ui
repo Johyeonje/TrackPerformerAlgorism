@@ -2,42 +2,37 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
-
-  <property name="geometry"> <!-- 전체 크기 -->
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>639</width>
-    <height>504</height>
+    <width>1050</width>
+    <height>797</height>
    </rect>
   </property>
-
-  <property name="windowTitle"> <!-- 스타일 시트 -->
+  <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-
-  <widget class="QWidget" name="centralwidget"> <!-- 그룹 만들기 -->
+  <widget class="QWidget" name="centralwidget">
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>80</y>
-      <width>621</width>
-      <height>381</height>
+      <y>130</y>
+      <width>1013</width>
+      <height>620</height>
      </rect>
     </property>
-
-    <property name="sizePolicy"> <!-- 자동으로 이상적인 값 넣기 -->
+    <property name="sizePolicy">
      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
       <horstretch>0</horstretch>
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
-
-    <property name="title"> <!-- video -->
+    <property name="title">
      <string>Video</string>
     </property>
     <widget class="QWidget" name="ImgWidget" native="true">
@@ -45,44 +40,37 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>601</width>
-       <height>351</height>
+       <width>993</width>
+       <height>600</height>
       </rect>
      </property>
-
     </widget>
    </widget>
-
-   <widget class="QPushButton" name="startButton"> <!-- start video -->
+   <widget class="QPushButton" name="startButton">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>621</width>
+      <x>90</x>
+      <y>40</y>
+      <width>541</width>
       <height>61</height>
      </rect>
     </property>
-
     <property name="text">
      <string>Start video</string>
     </property>
-
    </widget>
   </widget>
-
-  <widget class="QMenuBar" name="menubar"> <!-- 메뉴 바 -->
+  <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>639</width>
+     <width>1050</width>
      <height>21</height>
     </rect>
    </property>
-
   </widget>
-
-  <widget class="QStatusBar" name="statusbar"/> <!-- 상태바 -->
+  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
