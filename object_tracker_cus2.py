@@ -27,6 +27,20 @@ from deep_sort.tracker import Tracker
 from tools import generate_detections as gdet
 import queue
 
+class Allocate(object):
+    def __init__(self):
+        self.index_stack = []   # index used in past
+        self.centerX = None        # object center
+        self.centerY = None
+        self.is_used = 0        # check index used
+
+    def is_exist(self, track_id):
+        if track_id in self.index_stack:
+            if track_id != self.index_stack[0]:
+                print('$$$', track_id, '->', self.index_stack)
+            return True
+        else:
+            return False
 
 class Apply_Models(object):
     def __init__(self):
@@ -35,6 +49,7 @@ class Apply_Models(object):
         nn_budget = None
         model_filename = 'model_data/mars-small128.pb'
         weights = './checkpoints/yolov4-416'
+        self.people_num = 4
 
         # create indexing queue
         self.indexing = queue.Queue()
@@ -50,6 +65,35 @@ class Apply_Models(object):
         self.saved_model_loaded = tf.saved_model.load(weights, tags=[tag_constants.SERVING])
         self.infer = self.saved_model_loaded.signatures['serving_default']
 
+        # Create Object Matching Data
+
+        self.person1 = Allocate()
+        self.person2 = Allocate()
+        self.person3 = Allocate()
+        self.person4 = Allocate()
+
+        self.person1.index_stack.append(1)
+        self.person2.index_stack.append(2)
+        self.person3.index_stack.append(3)
+        self.person4.index_stack.append(4)
+
+    def getCenter(self, bbox):
+        centerX = (bbox[0] + bbox[2]) / 2
+        centerY = (bbox[1] + bbox[3]) / 2
+
+        return centerX, centerY
+
+    def draw_box(self, frame_data, track_id, colors, bbox, class_name='person'):
+        color = colors[int(track_id) * 8 % len(colors)]
+        color = [j * 255 for j in color]
+        cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
+        cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1] - 30)),
+                      (int(bbox[0]) + (len(class_name) + len(str(track_id))) * 17, int(bbox[1])),
+                      color, -1)
+        cv2.putText(frame_data, class_name + "-" + str(track_id),
+                    (int(bbox[0]), int(bbox[1] - 10)), 0, 0.75,
+                    (255, 255, 255), 2)
+
     def main(self, frame_data):
         # Definition of the parameters
         nms_max_overlap = 1.0
@@ -59,14 +103,15 @@ class Apply_Models(object):
         iou = 0.45
         score = 0.50
         info = False
-        people_num = 4
 
         input_size = size
 
         self.indexing.queue.clear()
 
-        for k in range(people_num):
-            self.indexing.put(k+1)
+        self.person1.is_used = 0
+        self.person2.is_used = 0
+        self.person3.is_used = 0
+        self.person4.is_used = 0
 
         out = None
 
@@ -168,63 +213,97 @@ class Apply_Models(object):
 
         # print('count', tracks_count)
 
-        # update tracks
-        for index, track in enumerate(self.tracker.tracks):
-            if not track.is_confirmed() or track.time_since_update > 1:
-                is_not_confirmed += 1
-                continue
-            if index-is_not_confirmed+1 > people_num:
-                break
+        match_person = 0
+        # reset temp for center compare
+        temp = []
 
+        # update tracks
+        for track in self.tracker.tracks:
+            if not track.is_confirmed() or track.time_since_update > 1:
+                continue
+
+            # draw bbox on screen           # 이거 처리까지 하고 나서 보내야 할 것 같다.
             bbox = track.to_tlbr()
             class_name = track.get_class()
 
-            # draw bbox on screen           # 이거 처리까지 하고 나서 보내야 할 것 같다.
+            if self.person1.is_exist(track.track_id):
+                self.person1.centerX, self.person1.centerY = self.getCenter(bbox)
+                self.draw_box(frame_data, self.person1.index_stack[0], colors, bbox, class_name)
+                self.person1.is_used = 1
+                match_person += 1
+            elif self.person2.is_exist(track.track_id):
+                self.person2.centerX, self.person2.centerY = self.getCenter(bbox)
+                self.draw_box(frame_data, self.person2.index_stack[0], colors, bbox, class_name)
+                self.person2.is_used = 1
+                match_person += 1
+            elif self.person3.is_exist(track.track_id):
+                self.person3.centerX, self.person3.centerY = self.getCenter(bbox)
+                self.draw_box(frame_data, self.person3.index_stack[0], colors, bbox, class_name)
+                self.person3.is_used = 1
+                match_person += 1
+            elif self.person4.is_exist(track.track_id):
+                self.person4.centerX, self.person4.centerY = self.getCenter(bbox)
+                self.draw_box(frame_data, self.person4.index_stack[0], colors, bbox, class_name)
+                self.person4.is_used = 1
+                match_person += 1
+            else:
+                temp.append([track.track_id, bbox])
+                print('found new object!')
 
-            for i in range(self.indexing.qsize()):
-                check_index = self.indexing.get()
-                if track.track_id == check_index:
-                    color = colors[int(track.track_id)*8 % len(colors)]
-                    color = [j * 255 for j in color]
-                    cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
-                    cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1] - 30)),
-                                  (int(bbox[0]) + (len(class_name) + len(str(track.track_id))) * 17, int(bbox[1])),
-                                  color, -1)
-                    cv2.putText(frame_data, class_name + "-" + str(track.track_id),
-                                (int(bbox[0]), int(bbox[1] - 10)), 0, 0.75,
-                                (255, 255, 255), 2)
-                    break
+        temp = np.array(temp)
+
+        if match_person != 4:
+            print('=========', match_person)
+            for tmp in temp:
+                compare_list = []
+                print(tmp)
+                nmtX, nmtY = self.getCenter(tmp[1])
+                if not self.person1.is_used:
+                    gap = np.sqrt(pow(self.person1.centerX-nmtX, 2)+pow(self.person1.centerY-nmtY, 2))
+                    compare_list.append([1, tmp[0], gap])
+                if not self.person2.is_used:
+                    gap = np.sqrt(pow(self.person2.centerX-nmtX, 2)+pow(self.person2.centerY-nmtY, 2))
+                    compare_list.append([2, tmp[0], gap])
+                if not self.person3.is_used:
+                    gap = np.sqrt(pow(self.person3.centerX-nmtX, 2)+pow(self.person3.centerY-nmtY, 2))
+                    compare_list.append([3, tmp[0], gap])
+                if not self.person4.is_used:
+                    gap = np.sqrt(pow(self.person4.centerX-nmtX, 2)+pow(self.person4.centerY-nmtY, 2))
+                    compare_list.append([4, tmp[0], gap])
+
+                compare_array = np.array(compare_list)
+                search_min = np.swapaxes(compare_array, axis1=0, axis2=1)
+                min_idx = np.argmin(search_min[-1])
+                self.draw_box(frame_data, compare_list[min_idx][0], colors, tmp[1], class_name)
+
+                if compare_list[min_idx][0] == 1:
+                    self.person1.is_used = 1
+                    self.person1.index_stack.append(compare_list[min_idx][1])
+                    print(self.person1.index_stack)
+                elif compare_list[min_idx][0] == 2:
+                    self.person2.is_used = 1
+                    self.person2.index_stack.append(compare_list[min_idx][1])
+                    print(self.person2.index_stack)
+                elif compare_list[min_idx][0] == 3:
+                    self.person3.is_used = 1
+                    self.person3.index_stack.append(compare_list[min_idx][1])
+                    print(self.person3.index_stack)
+                elif compare_list[min_idx][0] == 4:
+                    self.person4.is_used = 1
+                    self.person4.index_stack.append(compare_list[min_idx][1])
+                    print(self.person4.index_stack)
                 else:
-                    self.indexing.put(check_index)
+                    print("something problem in matching with center")
 
-                if i == self.indexing.qsize() - 1:
-                    cng_index = self.indexing.get()
-                    print('index changed', track.track_id, '->', cng_index)
 
-                    # track.track_id = cng_index
-
-                    color = colors[int(cng_index)*8 % len(colors)]
-                    color = [j * 255 for j in color]
-                    cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
-                    cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1] - 30)),
-                                  (int(bbox[0]) + (len(class_name) + len(str(cng_index))) * 17, int(bbox[1])),
-                                  color, -1)
-                    cv2.putText(frame_data, class_name + "-" + str(cng_index),
-                                (int(bbox[0]), int(bbox[1] - 10)), 0, 0.75,
-                                (255, 255, 255), 2)
-
-            # if enable info flag then print details about each track
-            if info:
-                print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id),
-                                                                                                    class_name, (
-                                                                                                        int(bbox[0]),
-                                                                                                        int(bbox[1]),
-                                                                                                        int(bbox[2]),
-                                                                                                        int(bbox[3]))))
+        # if enable info flag then print details about each track
+        if info:
+            print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id),
+                                class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
 
         # calculate frames per second of running detections
         fps = 1.0 / (time.time() - start_time)
-        # print("FPS: %.2f" % fps)
+        print("FPS: %.2f" % fps)
         result = cv2.cvtColor(frame_data, cv2.COLOR_RGB2BGR)
 
         return result
