@@ -258,6 +258,7 @@ class Apply_Models(object):
                 compare_list = []
                 print(tmp)
                 nmtX, nmtY = self.getCenter(tmp[1])
+                print(nmtX)
                 if not self.person1.is_used:
                     gap = np.sqrt(pow(self.person1.centerX-nmtX, 2)+pow(self.person1.centerY-nmtY, 2))
                     compare_list.append([1, tmp[0], gap])
