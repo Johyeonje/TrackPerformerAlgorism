@@ -343,7 +343,7 @@ class Apply_Models(object):
 
         # calculate frames per second of running detections
         fps = 1.0 / (time.time() - start_time)
-        print("FPS: %.2f" % fps)
+        # print("FPS: %.2f" % fps)
         result = cv2.cvtColor(frame_data, cv2.COLOR_RGB2BGR)
 
         return result
