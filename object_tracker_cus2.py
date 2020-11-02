@@ -252,7 +252,7 @@ class Apply_Models(object):
 
         temp = np.array(temp)
 
-        if match_person != 4:
+        if match_person < 4:
             print('=========', match_person)
             for tmp in temp:
                 compare_list = []
