@@ -7,7 +7,6 @@ def check_frame(path):
     while True:
         return_value, frame = vid.read()
         if return_value:
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             print(return_value)
             cv2.imshow('output video', frame)
             cv2.waitKey(0)
