@@ -10,6 +10,7 @@ from deep_sort import nn_matching
 from object_tracker_cus2 import Apply_Models
 from deep_sort.tracker import Tracker
 
+import time
 import queue
 import sys
 import threading
@@ -41,13 +42,15 @@ def grab(cam, queue, width, height, fps):
     apply = Apply_Models()
 
     while running:
+        start_time = time.time()
         frame = {}
         capture.grab()
         retval, img = capture.retrieve(0)
 
         img = apply.main(img)
         frame["img"] = img
-
+        fps = 1.0 / (time.time() - start_time)
+        print("FPS : ", fps)
         if queue.qsize() < 10:
             queue.put(frame)
         else:

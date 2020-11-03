@@ -115,7 +115,7 @@ class Apply_Models(object):
         image_data = cv2.resize(frame_data, (input_size, input_size))
         image_data = image_data / 255.
         image_data = image_data[np.newaxis, ...].astype(np.float32)
-        start_time = time.time()
+        # start_time = time.time()
 
         batch_data = tf.constant(image_data)
         pred_bbox = self.infer(batch_data)  # Yolo 모델 통과시켜서 바운딩 박스 좌표 반환
@@ -334,7 +334,7 @@ class Apply_Models(object):
                                 class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
 
         # calculate frames per second of running detections
-        fps = 1.0 / (time.time() - start_time)
+        # fps = 1.0 / (time.time() - start_time)
         # print("FPS: %.2f" % fps)
         result = cv2.cvtColor(frame_data, cv2.COLOR_RGB2BGR)
 
