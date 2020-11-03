@@ -25,7 +25,7 @@ from deep_sort import preprocessing, nn_matching
 from deep_sort.detection import Detection
 from deep_sort.tracker import Tracker
 from tools import generate_detections as gdet
-import queue
+
 
 class Allocate(object):
     def __init__(self):
@@ -51,9 +51,6 @@ class Apply_Models(object):
         model_filename = 'model_data/mars-small128.pb'
         weights = './checkpoints/yolov4-416'
         self.people_num = 4
-
-        # create indexing queue
-        self.indexing = queue.Queue()
 
         # initialize deep sort
         self.encoder = gdet.create_box_encoder(model_filename, batch_size=1)
@@ -106,8 +103,6 @@ class Apply_Models(object):
         info = False
 
         input_size = size
-
-        self.indexing.queue.clear()
 
         self.person1.is_used = 0
         self.person2.is_used = 0
@@ -204,15 +199,6 @@ class Apply_Models(object):
         # Call the tracker
         self.tracker.predict()  # load tracker
         self.tracker.update(detections)
-
-        #check is_confirmed
-        is_not_confirmed = 0
-
-        tracks_count = 0
-        for w, track in enumerate(self.tracker.tracks):
-            tracks_count += 1
-
-        # print('count', tracks_count)
 
         match_person = 0
         # reset temp for center compare
