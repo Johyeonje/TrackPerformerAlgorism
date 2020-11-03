@@ -50,7 +50,7 @@ def grab(cam, queue, width, height, fps):
         img = apply.main(img)
         frame["img"] = img
         fps = 1.0 / (time.time() - start_time)
-        print("FPS : ", fps)
+        print("FPS : %.3f"%(fps))
         if queue.qsize() < 10:
             queue.put(frame)
         else:
