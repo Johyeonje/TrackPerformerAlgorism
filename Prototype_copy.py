@@ -40,10 +40,13 @@ def grab(cam, queue, width, height, fps):
     capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
     capture.set(cv2.CAP_PROP_FPS, fps)
+    # s_fps = int(capture.get(cv2.CAP_PROP_FPS))
+    s_width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+    s_height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-    frame_size = (width, height)
+    # frame_size = (width, height)
     codec = cv2.VideoWriter_fourcc(*'DIVX')
-    out = cv2.VideoWriter('./outputs/demoF.avi', codec, fps, frame_size)
+    out = cv2.VideoWriter('./outputs/demoF.avi', codec, 20, (s_width, s_height))
 
     apply = Apply_Models()
 
