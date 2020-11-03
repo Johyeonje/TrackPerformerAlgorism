@@ -1,2 +1,6 @@
 
 data/yolov4.weights
+data/video/cars.mp4
+data/video/test.mp4
+video/cars.mp4
+video/test.mp4
