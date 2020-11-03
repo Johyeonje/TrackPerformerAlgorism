@@ -8,7 +8,7 @@ __license__ = "GPL"
 import numpy as np
 import tensorflow as tf
 from deep_sort import nn_matching
-from object_tracker_cus6 import Apply_Models
+from object_tracker_cus2 import Apply_Models
 from deep_sort.tracker import Tracker
 
 import queue
@@ -157,7 +157,7 @@ class MyWindowClass(QMainWindow, form_class):
         running = False
 
 
-capture_thread = threading.Thread(target=grab, args=('./data/video/tttt.mp4', q, 1920, 1080, 16))
+capture_thread = threading.Thread(target=grab, args=('./data/video/tttt1.mp4', q, 1920, 1080, 16))
 
 if __name__ == '__main__':
 
