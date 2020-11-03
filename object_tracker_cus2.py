@@ -237,7 +237,7 @@ class Apply_Models(object):
                 temp.append([track.track_id, bbox])
                 print('found new object!')
 
-        temp = np.array(temp)
+        temp = np.array(temp, dtype=object)
 
         is_only_one = []
 

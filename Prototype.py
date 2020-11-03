@@ -146,7 +146,7 @@ class MyWindowClass(QMainWindow, form_class):
         global running
         running = False
 
-capture_thread = threading.Thread(target=grab, args=('./data/video/tt1.mp4', q, 1920, 1080, 30))
+capture_thread = threading.Thread(target=grab, args=('./data/video/tttt1.mp4', q, 1920, 1080, 30))
 
 
 if __name__ == '__main__':
