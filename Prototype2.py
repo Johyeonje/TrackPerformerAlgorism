@@ -33,7 +33,7 @@ q = queue.Queue()
 state = 0
 x_start = 0
 x_end = 0
-y_start = 0
+y_start=0
 y_end = 0
 
 
@@ -56,7 +56,8 @@ def grab(cam, queue, width, height, fps):
 
         if state == 1:
             if reset == 1:
-                print(x_start, x_end, y_start, y_end)
+                MyWindowClass.get_editText()
+
                 apply.set_tracker()
                 reset = 0
 
@@ -142,7 +143,8 @@ class MyWindowClass(QMainWindow, form_class):
     def on_button_clicked(self):
         global state
         state = 1
-        self.get_editText()
+        self.x_changed()
+        self.y_changed()
 
 
     def off_button_clicked(self):
@@ -161,7 +163,7 @@ class MyWindowClass(QMainWindow, form_class):
         if self.x_end.getText.toInt():
             x_end = self.x_end.getText.toInt()
 
-        # if len(self.x_start.getText.toInt()) == 0 and len(self.x_end.getText.toInt()) == 0:
+        if len(self.x_start.getText.toInt()) == 0 and len(self.x_end.getText.toInt()) == 0:
 
 
         if self.y_start.getText.toInt():
@@ -170,7 +172,7 @@ class MyWindowClass(QMainWindow, form_class):
         if self.y_end.getText.toInt():
             y_end = self.y_end.getText.toInt()
 
-        # if len(self.y_start.getText.toInt()) == 0 and len(self.y_end.getText.toInt()) == 0:
+        if len(self.y_start.getText.toInt()) == 0 and len(self.y_end.getText.toInt()) == 0:
 
 
 
