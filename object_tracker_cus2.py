@@ -291,25 +291,22 @@ class Apply_Models(object):
                     match_person += 1
 
         # Missed Person Over 2
-        if match_person < 3:
-            print('if match_person < 3:', match_person)
+        if match_person < 3 and temp[0] >= 1:
             for tmp in temp:
                 compare_list = []
-                print(tmp)
                 nmtX, nmtY = self.getCenter(tmp[1])
-                print(nmtX)
 
                 # Apply center location Euclidean Distance
-                if not self.person1.is_used and self.person1.centerX == None:
+                if self.person1.is_used == False and self.person1.centerX != None:
                     gap = np.sqrt(pow(self.person1.centerX-nmtX, 2)+pow(self.person1.centerY-nmtY, 2))
                     compare_list.append([1, tmp[0], gap])
-                if not self.person2.is_used and self.person2.centerX == None:
+                if self.person2.is_used == False and self.person2.centerX != None:
                     gap = np.sqrt(pow(self.person2.centerX-nmtX, 2)+pow(self.person2.centerY-nmtY, 2))
                     compare_list.append([2, tmp[0], gap])
-                if not self.person3.is_used and self.person3.centerX == None:
+                if self.person3.is_used == False and self.person3.centerX != None:
                     gap = np.sqrt(pow(self.person3.centerX-nmtX, 2)+pow(self.person3.centerY-nmtY, 2))
                     compare_list.append([3, tmp[0], gap])
-                if not self.person4.is_used and self.person4.centerX == None:
+                if self.person4.is_used == False and self.person4.centerX != None:
                     gap = np.sqrt(pow(self.person4.centerX-nmtX, 2)+pow(self.person4.centerY-nmtY, 2))
                     compare_list.append([4, tmp[0], gap])
 
