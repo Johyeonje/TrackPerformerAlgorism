@@ -104,6 +104,7 @@ class Apply_Models(object):
 
         # select minimum index
         compare_array = np.array(compare_list)
+        print(compare_array)
         search_min = np.swapaxes(compare_array, axis1=0, axis2=1)
         min_idx = np.argmin(search_min[-1])
 
@@ -337,12 +338,14 @@ class Apply_Models(object):
         elif match_person == 3 and len(temp) >= 2:
             # Apply center location Euclidean Distance
             for tmp in temp:
+                print(tmp)
                 EUD_min = self.get_EuclideanDistance(tmp)
                 self.draw_box(frame_data, EUD_min, colors, tmp[1])
 
         # Missed Person Over 2
         if match_person < 3 and len(temp) >= 1:
             for tmp in temp:
+                print(tmp)
                 # Apply center location Euclidean Distance
                 EUD_min = self.get_EuclideanDistance(tmp)
                 self.draw_box(frame_data, EUD_min, colors, tmp[1])
