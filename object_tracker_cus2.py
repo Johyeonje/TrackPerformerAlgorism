@@ -294,7 +294,7 @@ class Apply_Models(object):
                     match_person += 1
 
         # Missed Person Over 2
-        if match_person < 3 and temp[0] >= 1:
+        if match_person < 3 and len(temp) >= 1:
             for tmp in temp:
                 compare_list = []
                 nmtX, nmtY = self.getCenter(tmp[1])
