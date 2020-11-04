@@ -7,7 +7,7 @@ __license__ = "GPL"
 
 import tensorflow as tf
 from deep_sort import nn_matching
-from object_tracker_cus5 import Apply_Models
+from object_tracker_cus2 import Apply_Models
 from deep_sort.tracker import Tracker
 
 import queue
@@ -40,6 +40,7 @@ def grab(cam, queue, width, height, fps):
     capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
     capture.set(cv2.CAP_PROP_FPS, fps)
+    apply = Apply_Models()
     reset = 1
 
     while running:
@@ -50,8 +51,9 @@ def grab(cam, queue, width, height, fps):
 
         if state == 1:
             if reset == 1:
-                apply = Apply_Models()
+                Apply_Models.set_tracker()
                 reset = 0
+
             img = apply.main(img)
         else:
             reset = 1

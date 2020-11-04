@@ -55,16 +55,20 @@ class Apply_Models(object):
         # initialize deep sort
         self.encoder = gdet.create_box_encoder(model_filename, batch_size=1)
 
-        # Set Tracker
+        # Set Metric
         self.metric = nn_matching.NearestNeighborDistanceMetric("cosine", max_cosine_distance, nn_budget)
-        self.tracker = Tracker(self.metric)
 
         # Load Model
         self.saved_model_loaded = tf.saved_model.load(weights, tags=[tag_constants.SERVING])
         self.infer = self.saved_model_loaded.signatures['serving_default']
 
-        # Create Object Matching Data
 
+
+    def set_track(self):
+        # Set Tracker
+        self.tracker = Tracker(self.metric)
+
+        # Create Object Matching Data
         self.person1 = Allocate()
         self.person2 = Allocate()
         self.person3 = Allocate()
