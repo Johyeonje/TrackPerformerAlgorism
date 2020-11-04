@@ -24,6 +24,6 @@ def evaluate_TPD(path):
 
 
 if __name__ == "__main__":
-  path = './original_deepsort_labels.xlsx'
+  path = './our_deepsort_labels.xlsx'
   print(path.split('/')[1], 'files operation..')
   evaluate_TPD(path)

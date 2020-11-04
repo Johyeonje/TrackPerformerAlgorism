@@ -213,6 +213,7 @@ class Apply_Models(object):
             bbox = track.to_tlbr()
             class_name = track.get_class()
 
+            # Matching index with index_stack
             if self.person1.is_exist(track.track_id):
                 self.person1.centerX, self.person1.centerY = self.getCenter(bbox)
                 self.draw_box(frame_data, self.person1.index_stack[0], colors, bbox)
@@ -241,6 +242,7 @@ class Apply_Models(object):
 
         is_only_one = []
 
+        # Missed Person Only 1
         if len(temp) == 1 and match_person == 3:
             print('if len(temp) == 1 and match_person == 3:')
             if self.person1.is_used == 0:
@@ -256,6 +258,7 @@ class Apply_Models(object):
                 print('if self.person4.is_used == 0:')
                 is_only_one.append(4)
 
+            # Matching index
             if len(is_only_one) == 1:
                 print('if len(is_only_one) == 1:')
                 if is_only_one[0] == 1:
@@ -283,6 +286,7 @@ class Apply_Models(object):
                     self.person4.is_used = 1
                     match_person += 1
 
+        # Missed Person Over 2
         if match_person < 3:
             print('if match_person < 3:', match_person)
             for tmp in temp:
@@ -290,6 +294,8 @@ class Apply_Models(object):
                 print(tmp)
                 nmtX, nmtY = self.getCenter(tmp[1])
                 print(nmtX)
+
+                # Apply center location Euclidean Distance
                 if not self.person1.is_used:
                     gap = np.sqrt(pow(self.person1.centerX-nmtX, 2)+pow(self.person1.centerY-nmtY, 2))
                     compare_list.append([1, tmp[0], gap])
@@ -303,11 +309,13 @@ class Apply_Models(object):
                     gap = np.sqrt(pow(self.person4.centerX-nmtX, 2)+pow(self.person4.centerY-nmtY, 2))
                     compare_list.append([4, tmp[0], gap])
 
+                # select minimum index
                 compare_array = np.array(compare_list)
                 search_min = np.swapaxes(compare_array, axis1=0, axis2=1)
                 min_idx = np.argmin(search_min[-1])
                 self.draw_box(frame_data, compare_list[min_idx][0], colors, tmp[1], class_name)
 
+                # Matching minimum index
                 if compare_list[min_idx][0] == 1:
                     self.person1.is_used = 1
                     self.person1.index_stack.append(compare_list[min_idx][1])
