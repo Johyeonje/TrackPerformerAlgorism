@@ -51,7 +51,7 @@ def grab(cam, queue, width, height, fps):
 
         if state == 1:
             if reset == 1:
-                Apply_Models.set_tracker()
+                apply.set_tracker()
                 reset = 0
 
             img = apply.main(img)
