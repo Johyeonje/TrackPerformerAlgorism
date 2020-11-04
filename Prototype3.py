@@ -31,15 +31,14 @@ capture_thread = None
 form_class = uic.loadUiType("simple3.ui")[0]
 q = queue.Queue()
 state = 0
-x_start = 0
-x_end = 0
-y_start = 0
-y_end = 0
+x_fir = 0
+x_sec = 0
+y_fir = 0
+y_sec = 0
 
 
 def grab(cam, queue, width, height, fps):
     global running
-
     capture = cv2.VideoCapture(cam)
     capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
@@ -56,7 +55,7 @@ def grab(cam, queue, width, height, fps):
 
         if state == 1:
             if reset == 1:
-                print(x_start, x_end, y_start, y_end)
+                print(x_fir, x_sec, y_fir, y_sec)
                 apply.set_tracker()
                 reset = 0
 
@@ -79,12 +78,14 @@ class OwnImageWidget(QWidget):
         self.image = None
 
     def setImage(self, image):  # 이 코드에 Yolov4 적용하면 될것으로 보임
+
         self.image = image
         sz = image.size()
         self.setMinimumSize(sz)
         self.update()
 
     def paintEvent(self, event):
+
         qp = QPainter()
 
         qp.begin(self)
@@ -94,6 +95,7 @@ class OwnImageWidget(QWidget):
 
 
 class MyWindowClass(QMainWindow, form_class):
+
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
         self.setupUi(self)
@@ -113,6 +115,7 @@ class MyWindowClass(QMainWindow, form_class):
         self.timer.start(1)
 
     def initUI(self):
+
         camAction = QAction('Use Cam', self)
         camAction.setShortcut('Ctrl+C')
         camAction.setStatusTip('Use Cam')
@@ -133,6 +136,7 @@ class MyWindowClass(QMainWindow, form_class):
 
 
     def start_clicked(self):
+
         global running
         running = True
         capture_thread.start()
@@ -140,35 +144,49 @@ class MyWindowClass(QMainWindow, form_class):
         self.startButton.setText('Starting...')
 
     def on_button_clicked(self):
+
         global state
         state = 1
         self.get_editText()
 
 
     def off_button_clicked(self):
+
         global state
         state = 0
 
+
     def get_editText(self):
-        global x_start
-        global x_end
-        global y_start
-        global y_end
 
-        if self.x_start.getText.toInt():
-            x_start = self.x_start.getText.toInt()
+        global x_fir
+        global x_sec
+        global y_fir
+        global y_sec
 
-        if self.x_end.getText.toInt():
-            x_end = self.x_end.getText.toInt()
+        if len(self.x_start.text()):
+            print('x_start start')
+            x_fir = self.x_start.text()
+            print('x_start end')
+
+        if self.x_end.text():
+            print('x_end start')
+            x_sec = self.x_end.text()
+            print('x_end end')
 
         # if len(self.x_start.getText.toInt()) == 0 and len(self.x_end.getText.toInt()) == 0:
 
 
-        if self.y_start.getText.toInt():
-            y_start = self.y_start.getText.toInt()
+        if self.y_start.text():
+            print('y_start start')
+            y_fir = self.y_start.text()
+            print('y_start end')
 
-        if self.y_end.getText.toInt():
-            y_end = self.y_end.getText.toInt()
+
+        if self.y_end.text():
+            print('x_end start')
+            y_sec = self.y_end.text()
+            print('y_end end')
+
 
         # if len(self.y_start.getText.toInt()) == 0 and len(self.y_end.getText.toInt()) == 0:
 
@@ -199,6 +217,7 @@ class MyWindowClass(QMainWindow, form_class):
             self.ImgWidget.setImage(image)
 
     def closeEvent(self, event):
+        print('14')
         global running
         running = False
 
