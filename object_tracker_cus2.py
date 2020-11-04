@@ -92,6 +92,9 @@ class Apply_Models(object):
         cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1] - 30)),
                       (int(bbox[0]) + (len(str(track_id))) * 17, int(bbox[1])),
                       color, -1)
+        cv2.putText(frame_data, str(track_id),
+                    (int(bbox[0]), int(bbox[1] - 10)), 0, 0.75,
+                    (255, 255, 255), 2)
         # cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1] - 30)),
         #               (int(bbox[0]) + (len(class_name) + len(str(track_id))) * 17, int(bbox[1])),
         #               color, -1)
