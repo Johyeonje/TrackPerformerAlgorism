@@ -40,8 +40,6 @@ def grab(cam, queue, width, height, fps):
     capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
     capture.set(cv2.CAP_PROP_FPS, fps)
-
-
     apply = Apply_Models()
     reset = 1
 
@@ -172,7 +170,7 @@ class MyWindowClass(QMainWindow, form_class):
         global running
         running = False
 
-capture_thread = threading.Thread(target=grab, args=('./data/video/tt.mp4', q, 1920, 1080, 10))
+capture_thread = threading.Thread(target=grab, args=('./data/video/mamamu.mp4', q, 1920, 1080, 10))
 
 if __name__ == '__main__':
 
