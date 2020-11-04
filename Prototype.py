@@ -40,6 +40,7 @@ def grab(cam, queue, width, height, fps):
     capture.set(cv2.CAP_PROP_FPS, fps)
 
     apply = Apply_Models()
+    apply.set_tracker()
 
     while running:
         start_time = time.time()
