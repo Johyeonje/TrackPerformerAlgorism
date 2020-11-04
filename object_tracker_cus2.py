@@ -84,10 +84,10 @@ class Apply_Models(object):
         return centerX, centerY
 
     # Apply center location Euclidean Distance
-    def get_EuclideanDistance(self, tmp):
-
-
-        return compare_list[min_idx][0]
+    # def get_EuclideanDistance(self, tmp):
+    #
+    #
+    #     return compare_list[min_idx][0]
 
 
     def draw_box(self, frame_data, track_id, colors, bbox, class_name='person'):
