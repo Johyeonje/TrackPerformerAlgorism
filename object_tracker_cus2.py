@@ -64,7 +64,7 @@ class Apply_Models(object):
 
 
 
-    def set_track(self):
+    def set_tracker(self):
         # Set Tracker
         self.tracker = Tracker(self.metric)
 
