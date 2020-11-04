@@ -46,7 +46,7 @@ def grab(cam, queue, width, height, fps):
         frame = {}
         capture.grab()
         retval, img = capture.retrieve(0)
-        img[:87, 77:] = 0
+        img[:87, :] = 0
         img = apply.main(img)
         frame["img"] = img
         fps = 1.0 / (time.time() - start_time)

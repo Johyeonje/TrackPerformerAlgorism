@@ -40,19 +40,23 @@ def grab(cam, queue, width, height, fps):
     capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
     capture.set(cv2.CAP_PROP_FPS, fps)
-    apply = Apply_Models()
+    reset = 1
 
     while running:
         frame = {}
         capture.grab()
         retval, img = capture.retrieve(0)
         # cv2.imshow('pyqt1', img)
+
         if state == 1:
+            if reset == 1:
+                apply = Apply_Models()
+                reset = 0
             img = apply.main(img)
+        else:
+            reset = 1
 
         frame["img"] = img
-
-
 
         if queue.qsize() < 10:
             queue.put(frame)
