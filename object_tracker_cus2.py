@@ -90,11 +90,14 @@ class Apply_Models(object):
         color = [j * 255 for j in color]
         cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
         cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1] - 30)),
-                      (int(bbox[0]) + (len(class_name) + len(str(track_id))) * 17, int(bbox[1])),
+                      (int(bbox[0]) + (len(str(track_id))) * 17, int(bbox[1])),
                       color, -1)
-        cv2.putText(frame_data, class_name + "-" + str(track_id),
-                    (int(bbox[0]), int(bbox[1] - 10)), 0, 0.75,
-                    (255, 255, 255), 2)
+        # cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1] - 30)),
+        #               (int(bbox[0]) + (len(class_name) + len(str(track_id))) * 17, int(bbox[1])),
+        #               color, -1)
+        # cv2.putText(frame_data, class_name + "-" + str(track_id),
+        #             (int(bbox[0]), int(bbox[1] - 10)), 0, 0.75,
+        #             (255, 255, 255), 2)
 
     def main(self, frame_data):
         # Definition of the parameters
