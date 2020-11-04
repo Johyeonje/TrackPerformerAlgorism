@@ -49,9 +49,9 @@
    <widget class="QPushButton" name="startButton">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>90</x>
       <y>40</y>
-      <width>471</width>
+      <width>541</width>
       <height>61</height>
      </rect>
     </property>
@@ -59,134 +59,29 @@
      <string>Start video</string>
     </property>
    </widget>
-   <widget class="QGroupBox" name="radioBox_2">
-    <property name="geometry">
-     <rect>
-      <x>590</x>
-      <y>20</y>
-      <width>261</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Location</string>
-    </property>
-    <widget class="QLineEdit" name="x_start">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>30</y>
-       <width>71</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="xxx">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>30</y>
-       <width>21</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>X</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="yyy">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>70</y>
-       <width>21</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Y</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="x_end">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>30</y>
-       <width>71</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="y_srart">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>70</y>
-       <width>71</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="y_end">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>70</y>
-       <width>71</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="x_tilde">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>30</y>
-       <width>16</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>~</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="y_tilde">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>70</y>
-       <width>16</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>~</string>
-     </property>
-    </widget>
-   </widget>
    <widget class="QGroupBox" name="radioBox">
     <property name="geometry">
      <rect>
-      <x>880</x>
+      <x>770</x>
       <y>20</y>
-      <width>141</width>
+      <width>181</width>
       <height>101</height>
      </rect>
     </property>
     <property name="title">
-     <string>Tracking</string>
+     <string>GroupBox</string>
     </property>
     <widget class="QRadioButton" name="onButton">
      <property name="geometry">
       <rect>
        <x>40</x>
        <y>30</y>
-       <width>71</width>
-       <height>31</height>
+       <width>90</width>
+       <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>Start</string>
+      <string>on</string>
      </property>
     </widget>
     <widget class="QRadioButton" name="offButton">
@@ -194,12 +89,12 @@
       <rect>
        <x>40</x>
        <y>60</y>
-       <width>61</width>
-       <height>31</height>
+       <width>90</width>
+       <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>Stop</string>
+      <string>off</string>
      </property>
     </widget>
    </widget>

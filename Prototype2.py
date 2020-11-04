@@ -28,13 +28,9 @@ from tensorflow.python.saved_model import tag_constants
 
 running = False
 capture_thread = None
-form_class = uic.loadUiType("simple.ui")[0]
+form_class = uic.loadUiType("C:\SBA\PyCharm\SBA_Project\github\yolov4-deepsort-master\simple2.ui")[0]
 q = queue.Queue()
 state = 0
-x_start = 0
-x_end = 0
-y_start=0
-y_end = 0
 
 
 def grab(cam, queue, width, height, fps):
@@ -44,6 +40,7 @@ def grab(cam, queue, width, height, fps):
     capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
     capture.set(cv2.CAP_PROP_FPS, fps)
+
 
     apply = Apply_Models()
     reset = 1
@@ -56,8 +53,6 @@ def grab(cam, queue, width, height, fps):
 
         if state == 1:
             if reset == 1:
-                MyWindowClass.get_editText()
-
                 apply.set_tracker()
                 reset = 0
 
@@ -143,41 +138,14 @@ class MyWindowClass(QMainWindow, form_class):
     def on_button_clicked(self):
         global state
         state = 1
-        self.x_changed()
-        self.y_changed()
+
+        # #create track object
+        # Apply_Models.create_object(self)
 
 
     def off_button_clicked(self):
         global state
         state = 0
-
-    def get_editText(self):
-        global x_start
-        global x_end
-        global y_start
-        global y_end
-
-        if self.x_start.getText.toInt():
-            x_start = self.x_start.getText.toInt()
-
-        if self.x_end.getText.toInt():
-            x_end = self.x_end.getText.toInt()
-
-        if len(self.x_start.getText.toInt()) == 0 and len(self.x_end.getText.toInt()) == 0:
-
-
-        if self.y_start.getText.toInt():
-            y_start = self.y_start.getText.toInt()
-
-        if self.y_end.getText.toInt():
-            y_end = self.y_end.getText.toInt()
-
-        if len(self.y_start.getText.toInt()) == 0 and len(self.y_end.getText.toInt()) == 0:
-
-
-
-
-
 
 
     def update_frame(self):
