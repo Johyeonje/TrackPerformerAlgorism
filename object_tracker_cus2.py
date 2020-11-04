@@ -339,6 +339,8 @@ class Apply_Models(object):
             for tmp in temp:
                 EUD_min = self.get_EuclideanDistance(tmp)
                 self.draw_box(frame_data, EUD_min, colors, tmp[1])
+                match_person += 1
+                break
 
         # Missed Person Over 2
         if match_person < 3 and len(temp) >= 1:
@@ -346,6 +348,8 @@ class Apply_Models(object):
                 # Apply center location Euclidean Distance
                 EUD_min = self.get_EuclideanDistance(tmp)
                 self.draw_box(frame_data, EUD_min, colors, tmp[1])
+                match_person += 1
+                break
 
 
         # if enable info flag then print details about each track
