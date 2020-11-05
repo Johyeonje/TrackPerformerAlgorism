@@ -20,9 +20,9 @@ form_class = uic.loadUiType("simple3.ui")[0]
 q = queue.Queue()
 state = 0
 start_X = 0
-width_X = 0
+width_X = 1920
 start_Y = 0
-height_Y = 0
+height_Y = 1080
 
 
 def grab(cam, queue, width, height, fps):
