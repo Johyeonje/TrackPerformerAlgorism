@@ -28,9 +28,9 @@ def grab(cam, queue, width, height, fps):
     global running, start_X, width_X, start_Y, height_Y, cap_X, cap_Y
 
     capture = cv2.VideoCapture(cam)
-    width_X = capture.get(cv2.CAP_PROP_FRAME_WIDTH)
+    width_X = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
     cap_X = width_X
-    height_Y = capture.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    height_Y = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
     cap_Y = height_Y
     # capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     # capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
