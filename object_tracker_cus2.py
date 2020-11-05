@@ -34,6 +34,7 @@ class Allocate(object):
         self.centerY = None
         self.is_used = 0        # check index used
 
+    #check
     def is_exist(self, track_id):
         if track_id in self.index_stack:
             if track_id != self.index_stack[0]:
@@ -129,7 +130,6 @@ class Apply_Models(object):
             print("something problem in matching with center")
 
         return compare_list[min_idx][0]
-
 
     def draw_box(self, frame_data, track_id, colors, bbox, class_name='person'):
         color = colors[int(track_id) * 8 % len(colors)]
@@ -358,9 +358,6 @@ class Apply_Models(object):
             print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id),
                                 class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
 
-        # calculate frames per second of running detections
-        # fps = 1.0 / (time.time() - start_time)
-        # print("FPS: %.2f" % fps)
         result = cv2.cvtColor(frame_data, cv2.COLOR_RGB2BGR)
 
         return result
