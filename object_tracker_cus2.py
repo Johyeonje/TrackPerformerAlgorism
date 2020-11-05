@@ -103,10 +103,11 @@ class Apply_Models(object):
             compare_list.append([4, tmp[0], gap])
 
         # select minimum index
-        compare_array = np.array(compare_list)
-        print(compare_array)
-        search_min = np.swapaxes(compare_array, axis1=0, axis2=1)
-        min_idx = np.argmin(search_min[-1])
+        if compare_list:
+            compare_array = np.array(compare_list)
+            print(compare_array)
+            search_min = np.swapaxes(compare_array, axis1=0, axis2=1)
+            min_idx = np.argmin(search_min[-1])
 
         # Matching minimum index
         if compare_list[min_idx][0] == 1:
