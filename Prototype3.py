@@ -43,7 +43,6 @@ def grab(cam, queue, width, height, fps):
     capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
     capture.set(cv2.CAP_PROP_FPS, fps)
-
     apply = Apply_Models()
     reset = 1
 
@@ -55,7 +54,7 @@ def grab(cam, queue, width, height, fps):
 
         if state == 1:
             if reset == 1:
-                print(x_fir, x_sec, y_fir, y_sec)
+                # print(x_fir, x_sec, y_fir, y_sec)
                 apply.set_tracker()
                 reset = 0
             img = img[int(y_fir):int(y_sec)+1, int(x_fir):int(x_sec)+1]
@@ -142,6 +141,10 @@ class MyWindowClass(QMainWindow, form_class):
         capture_thread.start()
         self.startButton.setEnabled(False)
         self.startButton.setText('Starting...')
+        self.x_start.setTest('0')
+        self.x_end.setTest('1920')
+        self.x_start.setTest('0')
+        self.x_start.setTest('1080')
 
     def on_button_clicked(self):
 
