@@ -154,22 +154,22 @@ class MyWindowClass(QMainWindow, form_class):
         global start_Y
         global height_Y
 
-        if len(self.x_start.text()):
+        if self.x_start.text():
             start_X = self.x_start.text()
         else:
             self.x_start.setText(start_X)
 
-        if len(self.x_end.text()):
+        if self.x_end.text():
             width_X = self.x_end.text()
         else:
             self.x_end.setText(width_X)
 
-        if len(self.y_start.text()):
+        if self.y_start.text():
             start_Y = self.y_start.text()
         else:
             self.y_start.setText(start_Y)
 
-        if len(self.y_end.text()):
+        if self.y_end.text():
             height_Y = self.y_end.text()
         else:
             self.y_end.setText(height_Y)
