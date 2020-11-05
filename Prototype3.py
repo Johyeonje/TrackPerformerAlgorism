@@ -19,24 +19,19 @@ capture_thread = None
 form_class = uic.loadUiType("simple3.ui")[0]
 q = queue.Queue()
 state = 0
-start_X = 0
-width_X = 1920
-start_Y = 0
-height_Y = 1080
+start_X, start_Y = 0, 0
+width_X, height_Y = 1920, 1080
+cap_X, cap_Y = 0, 0
 
 
 def grab(cam, queue, width, height, fps):
-    global running
-    global start_X
-    global width_X
-    global start_Y
-    global height_Y
+    global running, start_X, width_X, start_Y, height_Y, cap_X, cap_Y
 
     capture = cv2.VideoCapture(cam)
     width_X = capture.get(cv2.CAP_PROP_FRAME_WIDTH)
-    print('capture width : ',width_X)
+    cap_X = width_X
     height_Y = capture.get(cv2.CAP_PROP_FRAME_HEIGHT)
-    print('capture height : ',height_Y)
+    cap_Y = height_Y
     # capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     # capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
     # capture.set(cv2.CAP_PROP_FPS, fps)
@@ -156,31 +151,27 @@ class MyWindowClass(QMainWindow, form_class):
 
     def get_editText(self):
 
-        global start_X
-        global width_X
-        global start_Y
-        global height_Y
+        global start_X, width_X, start_Y, height_Y, cap_X, cap_Y
 
         if len(self.x_start.text()):
             start_X = self.x_start.text()
         else:
-            print('can not found')
-            self.x_start.setText(start_X)
+            self.x_start.setText('0')
 
         if len(self.x_end.text()):
             width_X = self.x_end.text()
         else:
-            self.x_end.setText(width_X)
+            self.x_end.setText(cap_X)
 
         if len(self.y_start.text()):
             start_Y = self.y_start.text()
         else:
-            self.y_start.setText(start_Y)
+            self.y_start.setText('0')
 
         if len(self.y_end.text()):
             height_Y = self.y_end.text()
         else:
-            self.y_end.setText(height_Y)
+            self.y_end.setText(cap_Y)
 
     def update_frame(self):
         if not q.empty():
