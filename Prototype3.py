@@ -31,10 +31,10 @@ capture_thread = None
 form_class = uic.loadUiType("simple3.ui")[0]
 q = queue.Queue()
 state = 0
-x_fir = 0
-x_sec = 0
-y_fir = 0
-y_sec = 0
+start_X = 0
+width_X = 0
+start_Y = 0
+width_Y = 0
 
 
 def grab(cam, queue, width, height, fps):
@@ -54,10 +54,10 @@ def grab(cam, queue, width, height, fps):
 
         if state == 1:
             if reset == 1:
-                # print(x_fir, x_sec, y_fir, y_sec)
+                # print(start_X, width_X, start_Y, width_Y)
                 apply.set_tracker()
                 reset = 0
-            img = img[int(y_fir):int(y_sec)+1, int(x_fir):int(x_sec)+1]
+            img = img[int(start_Y):int(width_Y)+1, int(start_X):int(width_X)+1]
             img = apply.main(img)
         else:
             reset = 1
@@ -161,34 +161,42 @@ class MyWindowClass(QMainWindow, form_class):
 
     def get_editText(self):
 
-        global x_fir
-        global x_sec
-        global y_fir
-        global y_sec
+        global start_X
+        global width_X
+        global start_Y
+        global width_Y
 
         if len(self.x_start.text()):
             print('x_start start')
-            x_fir = self.x_start.text()
+            start_X = self.x_start.text()
             print('x_start end')
+        else:
+            start_X = 0
 
         if self.x_end.text():
             print('x_end start')
-            x_sec = self.x_end.text()
+            width_X = self.x_end.text()
             print('x_end end')
+        else:
+            width_X = 1920
 
         # if len(self.x_start.getText.toInt()) == 0 and len(self.x_end.getText.toInt()) == 0:
 
 
         if self.y_start.text():
             print('y_start start')
-            y_fir = self.y_start.text()
+            start_Y = self.y_start.text()
             print('y_start end')
+        else:
+            start_Y = 0
 
 
         if self.y_end.text():
             print('x_end start')
-            y_sec = self.y_end.text()
+            width_Y = self.y_end.text()
             print('y_end end')
+        else:
+            width_Y = 1080
 
 
         # if len(self.y_start.getText.toInt()) == 0 and len(self.y_end.getText.toInt()) == 0:
