@@ -1,14 +1,4 @@
-# -*- coding: utf-8 -*-
-
-__author__ = "Saulius Lukse"
-__copyright__ = "Copyright 2016, kurokesu.com"
-__version__ = "0.1"
-__license__ = "GPL"
-
-import tensorflow as tf
-from deep_sort import nn_matching
 from object_tracker_cus2 import Apply_Models
-from deep_sort.tracker import Tracker
 
 import queue
 import sys
@@ -23,8 +13,6 @@ from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QHBoxLayout, QPushButton, QSlider, QStyle, QVBoxLayout, QWidget,
                              QStatusBar, QMainWindow,
                              QAction, qApp)
-
-from tensorflow.python.saved_model import tag_constants
 
 running = False
 capture_thread = None
@@ -72,6 +60,7 @@ def grab(cam, queue, width, height, fps):
 
 
 class OwnImageWidget(QWidget):
+
     def __init__(self, parent=None):
         super(OwnImageWidget, self).__init__(parent)
         self.image = None
@@ -135,7 +124,6 @@ class MyWindowClass(QMainWindow, form_class):
         filemenu.addAction(camAction)
         filemenu.addAction(exitAction)
 
-
     def start_clicked(self):
 
         global running
@@ -149,16 +137,12 @@ class MyWindowClass(QMainWindow, form_class):
         self.y_end.setText('1080')
 
     def on_button_clicked(self):
-
         global state
         state = 1
 
-
     def off_button_clicked(self):
-
         global state
         state = 0
-
 
     def get_editText(self):
 
@@ -177,28 +161,15 @@ class MyWindowClass(QMainWindow, form_class):
         else:
             width_X = 1920
 
-        # if len(self.x_start.getText.toInt()) == 0 and len(self.x_end.getText.toInt()) == 0:
-
-
         if self.y_start.text():
             start_Y = self.y_start.text()
         else:
             start_Y = 0
 
-
         if self.y_end.text():
             width_Y = self.y_end.text()
         else:
             width_Y = 1080
-
-
-        # if len(self.y_start.getText.toInt()) == 0 and len(self.y_end.getText.toInt()) == 0:
-
-
-
-
-
-
 
     def update_frame(self):
         if not q.empty():
@@ -226,8 +197,8 @@ class MyWindowClass(QMainWindow, form_class):
 
 capture_thread = threading.Thread(target=grab, args=('./data/video/tt.mp4', q, 1920, 1080, 10))
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     app = QApplication(sys.argv)
     w = MyWindowClass(None)
     w.setWindowTitle('Performer Tracking Program Prototype v2.7')
