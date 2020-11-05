@@ -28,7 +28,7 @@ from tensorflow.python.saved_model import tag_constants
 
 running = False
 capture_thread = None
-form_class = uic.loadUiType("simple3.ui")[0]
+form_class = uic.loadUiType("simple3.ui.html")[0]
 q = queue.Queue()
 state = 0
 x_fir = 0
@@ -58,7 +58,7 @@ def grab(cam, queue, width, height, fps):
                 print(x_fir, x_sec, y_fir, y_sec)
                 apply.set_tracker()
                 reset = 0
-
+            img = img[x_fir:x_sec+1, y_fir:y_sec+1]
             img = apply.main(img)
         else:
             reset = 1
