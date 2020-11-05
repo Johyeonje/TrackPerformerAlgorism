@@ -58,7 +58,7 @@ def grab(cam, queue, width, height, fps):
                 print(x_fir, x_sec, y_fir, y_sec)
                 apply.set_tracker()
                 reset = 0
-            img = img[x_fir:x_sec+1, y_fir:y_sec+1]
+            img = img[y_fir:y_sec+1, x_fir:x_sec+1]
             img = apply.main(img)
         else:
             reset = 1
