@@ -32,9 +32,9 @@ form_class = uic.loadUiType("simple3.ui")[0]
 q = queue.Queue()
 state = 0
 start_X = 0
-width_X = 0
+width_X = 1920
 start_Y = 0
-width_Y = 0
+width_Y = 1080
 
 
 def grab(cam, queue, width, height, fps):
@@ -50,6 +50,7 @@ def grab(cam, queue, width, height, fps):
         frame = {}
         capture.grab()
         retval, img = capture.retrieve(0)
+        img = img[int(start_Y):int(width_Y)+1, int(start_X):int(width_X)+1]
         # cv2.imshow('pyqt1', img)
 
         if state == 1:
@@ -57,7 +58,6 @@ def grab(cam, queue, width, height, fps):
                 # print(start_X, width_X, start_Y, width_Y)
                 apply.set_tracker()
                 reset = 0
-            img = img[int(start_Y):int(width_Y)+1, int(start_X):int(width_X)+1]
             img = apply.main(img)
         else:
             reset = 1
@@ -105,6 +105,8 @@ class MyWindowClass(QMainWindow, form_class):
         self.onButton.clicked.connect(self.on_button_clicked)
         self.offButton.clicked.connect(self.off_button_clicked)
 
+        self.Loc_apply.clicked.connect(self.get_editText)
+
         self.window_width = self.ImgWidget.frameSize().width()
         self.window_height = self.ImgWidget.frameSize().height()
         self.ImgWidget = OwnImageWidget(self.ImgWidget)
@@ -150,7 +152,6 @@ class MyWindowClass(QMainWindow, form_class):
 
         global state
         state = 1
-        self.get_editText()
 
 
     def off_button_clicked(self):
