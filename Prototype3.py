@@ -20,17 +20,20 @@ form_class = uic.loadUiType("simple3.ui")[0]
 q = queue.Queue()
 state = 0
 start_X = 0
-width_X = 1920
+width_X = 0
 start_Y = 0
-width_Y = 1080
+height_Y = 0
 
 
 def grab(cam, queue, width, height, fps):
     global running
     capture = cv2.VideoCapture(cam)
-    capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
-    capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
-    capture.set(cv2.CAP_PROP_FPS, fps)
+    width_X = capture.get(cv2.CAP_PROP_FRAME_WIDTH)
+    height_Y = capture.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    # capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+    # capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+    # capture.set(cv2.CAP_PROP_FPS, fps)
+
     apply = Apply_Models()
     reset = 1
 
@@ -38,12 +41,12 @@ def grab(cam, queue, width, height, fps):
         frame = {}
         capture.grab()
         retval, img = capture.retrieve(0)
-        img = img[int(start_Y):int(width_Y)+1, int(start_X):int(width_X)+1]
+        img = img[int(start_Y):int(height_Y)+1, int(start_X):int(width_X)+1]
         # cv2.imshow('pyqt1', img)
 
         if state == 1:
             if reset == 1:
-                # print(start_X, width_X, start_Y, width_Y)
+                # print(start_X, width_X, start_Y, height_Y)
                 apply.set_tracker()
                 reset = 0
             img = apply.main(img)
@@ -131,10 +134,10 @@ class MyWindowClass(QMainWindow, form_class):
         capture_thread.start()
         self.startButton.setEnabled(False)
         self.startButton.setText('Starting...')
-        self.x_start.setText('0')
-        self.x_end.setText('1920')
-        self.y_start.setText('0')
-        self.y_end.setText('1080')
+        self.x_start.setText(start_X)
+        self.x_end.setText(width_X)
+        self.y_start.setText(start_Y)
+        self.y_end.setText(height_Y)
 
     def on_button_clicked(self):
         global state
@@ -149,27 +152,27 @@ class MyWindowClass(QMainWindow, form_class):
         global start_X
         global width_X
         global start_Y
-        global width_Y
+        global height_Y
 
         if len(self.x_start.text()):
             start_X = self.x_start.text()
         else:
-            start_X = 0
+            self.x_start.setText(start_X)
 
-        if self.x_end.text():
+        if len(self.x_end.text()):
             width_X = self.x_end.text()
         else:
-            width_X = 1920
+            self.x_end.setText(width_X)
 
-        if self.y_start.text():
+        if len(self.y_start.text()):
             start_Y = self.y_start.text()
         else:
-            start_Y = 0
+            self.y_start.setText(start_Y)
 
-        if self.y_end.text():
-            width_Y = self.y_end.text()
+        if len(self.y_end.text()):
+            height_Y = self.y_end.text()
         else:
-            width_Y = 1080
+            self.y_end.setText(height_Y)
 
     def update_frame(self):
         if not q.empty():
