@@ -134,10 +134,7 @@ class MyWindowClass(QMainWindow, form_class):
         capture_thread.start()
         self.startButton.setEnabled(False)
         self.startButton.setText('Starting...')
-        self.x_start.setText(start_X)
-        self.x_end.setText(width_X)
-        self.y_start.setText(start_Y)
-        self.y_end.setText(height_Y)
+        self.get_editText()
 
     def on_button_clicked(self):
         global state
