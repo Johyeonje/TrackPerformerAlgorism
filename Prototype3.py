@@ -220,7 +220,6 @@ class MyWindowClass(QMainWindow, form_class):
             self.ImgWidget.setImage(image)
 
     def closeEvent(self, event):
-        print('14')
         global running
         running = False
 
