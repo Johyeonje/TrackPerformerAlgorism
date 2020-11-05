@@ -161,7 +161,7 @@ class MyWindowClass(QMainWindow, form_class):
         if len(self.x_end.text()):
             width_X = self.x_end.text()
         else:
-            self.x_end.setText(cap_X)
+            self.x_end.setText(str(cap_X))
 
         if len(self.y_start.text()):
             start_Y = self.y_start.text()
@@ -171,7 +171,7 @@ class MyWindowClass(QMainWindow, form_class):
         if len(self.y_end.text()):
             height_Y = self.y_end.text()
         else:
-            self.y_end.setText(cap_Y)
+            self.y_end.setText(str(cap_Y))
 
     def update_frame(self):
         if not q.empty():
