@@ -27,9 +27,16 @@ height_Y = 1080
 
 def grab(cam, queue, width, height, fps):
     global running
+    global start_X
+    global width_X
+    global start_Y
+    global height_Y
+
     capture = cv2.VideoCapture(cam)
     width_X = capture.get(cv2.CAP_PROP_FRAME_WIDTH)
+    print('capture width : ',width_X)
     height_Y = capture.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    print('capture height : ',height_Y)
     # capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     # capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
     # capture.set(cv2.CAP_PROP_FPS, fps)
@@ -157,6 +164,7 @@ class MyWindowClass(QMainWindow, form_class):
         if len(self.x_start.text()):
             start_X = self.x_start.text()
         else:
+            print('can not found')
             self.x_start.setText(start_X)
 
         if len(self.x_end.text()):
