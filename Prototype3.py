@@ -167,16 +167,12 @@ class MyWindowClass(QMainWindow, form_class):
         global width_Y
 
         if len(self.x_start.text()):
-            print('x_start start')
             start_X = self.x_start.text()
-            print('x_start end')
         else:
             start_X = 0
 
         if self.x_end.text():
-            print('x_end start')
             width_X = self.x_end.text()
-            print('x_end end')
         else:
             width_X = 1920
 
@@ -184,17 +180,13 @@ class MyWindowClass(QMainWindow, form_class):
 
 
         if self.y_start.text():
-            print('y_start start')
             start_Y = self.y_start.text()
-            print('y_start end')
         else:
             start_Y = 0
 
 
         if self.y_end.text():
-            print('x_end start')
             width_Y = self.y_end.text()
-            print('y_end end')
         else:
             width_Y = 1080
 
@@ -238,6 +230,6 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     w = MyWindowClass(None)
-    w.setWindowTitle('Kurokesu PyQT OpenCV USB camera test panel')
+    w.setWindowTitle('Performer Tracking Program Prototype v2.7')
     w.show()
     app.exec_()
