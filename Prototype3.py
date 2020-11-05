@@ -143,8 +143,8 @@ class MyWindowClass(QMainWindow, form_class):
         self.startButton.setText('Starting...')
         self.x_start.setTest('0')
         self.x_end.setTest('1920')
-        self.x_start.setTest('0')
-        self.x_start.setTest('1080')
+        self.y_start.setTest('0')
+        self.y_end.setTest('1080')
 
     def on_button_clicked(self):
 
