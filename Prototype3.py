@@ -28,7 +28,7 @@ from tensorflow.python.saved_model import tag_constants
 
 running = False
 capture_thread = None
-form_class = uic.loadUiType("simple3.ui.html")[0]
+form_class = uic.loadUiType("simple3.ui")[0]
 q = queue.Queue()
 state = 0
 x_fir = 0
