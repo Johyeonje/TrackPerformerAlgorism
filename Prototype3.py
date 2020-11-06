@@ -5,6 +5,7 @@ import sys
 import threading
 
 import cv2
+import numpy as np
 from PyQt5 import uic
 from PyQt5.QtCore import Qt, QUrl, QSize, QPoint, QTimer
 from PyQt5.QtGui import QIcon, QFont, QPainter, QImage
@@ -44,6 +45,7 @@ def grab(cam, queue, width, height, fps):
         capture.grab()
         retval, img = capture.retrieve(0)
         black_tile = [[[0 for c_ in range(3)] for w_ in range(img.shape[1])] for h_ in range(img.shape[0])]
+        black_tile = np.array(black_tile, dtype=np.float32)
 
         black_tile[int(start_Y):int(height_Y)+1, int(start_X):int(width_X)+1] = \
             img[int(start_Y):int(height_Y)+1, int(start_X):int(width_X)+1]
