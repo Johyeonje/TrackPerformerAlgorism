@@ -44,10 +44,10 @@ def grab(cam, queue, width, height, fps):
         frame = {}
         capture.grab()
         retval, img = capture.retrieve(0)
-        img[:start_Y, :] = 0
-        img[:, :start_X] = 0
-        img[height_Y:, :] = 0
-        img[:, width_X:] = 0
+        img[:int(start_Y)+1, :] = 0
+        img[:, :int(start_X)+1] = 0
+        img[int(height_Y):, :] = 0
+        img[:, int(width_X):] = 0
 
         # img = img[int(start_Y):int(height_Y)+1, int(start_X):int(width_X)+1]
         # cv2.imshow('pyqt1', img)
