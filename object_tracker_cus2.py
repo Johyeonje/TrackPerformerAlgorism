@@ -27,6 +27,7 @@ from deep_sort.tracker import Tracker
 from tools import generate_detections as gdet
 
 
+# Object for index matching algorithm
 class Allocate(object):
     def __init__(self):
         self.index_stack = []   # index used in past
@@ -34,7 +35,7 @@ class Allocate(object):
         self.centerY = None
         self.is_used = 0        # check index used
 
-    #check
+    # Check index_stack
     def is_exist(self, track_id):
         if track_id in self.index_stack:
             if track_id != self.index_stack[0]:
@@ -85,23 +86,26 @@ class Apply_Models(object):
         return centerX, centerY
 
     # Apply center location Euclidean Distance
-    def get_EuclideanDistance(self, tmp):
+    def get_EuclideanDistance(self, unmatch):
+        # Create list to compare center distance values for unmatched objects
         compare_list = []
-        nmtX, nmtY = self.getCenter(tmp[1])
+
+        # Get center location from unmatched objects
+        nmtX, nmtY = self.getCenter(unmatch[1])
 
         # Apply center location Euclidean Distance
         if self.person1.is_used == 0 and self.person1.centerX != None:
             gap = np.sqrt(pow(self.person1.centerX - nmtX, 2) + pow(self.person1.centerY - nmtY, 2))
-            compare_list.append([1, tmp[0], gap])
+            compare_list.append([1, unmatch[0], gap])
         if self.person2.is_used == 0 and self.person2.centerX != None:
             gap = np.sqrt(pow(self.person2.centerX - nmtX, 2) + pow(self.person2.centerY - nmtY, 2))
-            compare_list.append([2, tmp[0], gap])
+            compare_list.append([2, unmatch[0], gap])
         if self.person3.is_used == 0 and self.person3.centerX != None:
             gap = np.sqrt(pow(self.person3.centerX - nmtX, 2) + pow(self.person3.centerY - nmtY, 2))
-            compare_list.append([3, tmp[0], gap])
+            compare_list.append([3, unmatch[0], gap])
         if self.person4.is_used == 0 and self.person4.centerX != None:
             gap = np.sqrt(pow(self.person4.centerX - nmtX, 2) + pow(self.person4.centerY - nmtY, 2))
-            compare_list.append([4, tmp[0], gap])
+            compare_list.append([4, unmatch[0], gap])
 
         # select minimum index
         if compare_list:
@@ -257,8 +261,8 @@ class Apply_Models(object):
         self.tracker.update(detections)
 
         match_person = 0
-        # reset temp for center compare
-        temp = []
+        # reset unmatched for center compare
+        unmatched = []
 
         # update tracks
         for track in self.tracker.tracks:
@@ -291,66 +295,59 @@ class Apply_Models(object):
                 self.person4.is_used = 1
                 match_person += 1
             else:
-                temp.append([track.track_id, bbox])
+                unmatched.append([track.track_id, bbox])
                 print('found new object!')
 
-        temp = np.array(temp, dtype=object)
-
-        is_only_one = []
+        unmatched = np.array(unmatched, dtype=object)
 
         # Missed Person Only 1
-        if match_person == 3 and len(temp) == 1:
+        if match_person == 3 and len(unmatched) == 1:
             if self.person1.is_used == 0:
-                is_only_one.append(1)
-            if self.person2.is_used == 0:
-                is_only_one.append(2)
-            if self.person3.is_used == 0:
-                is_only_one.append(3)
-            if self.person4.is_used == 0:
-                is_only_one.append(4)
-
-            # Matching index
-            if len(is_only_one) == 1:
-                if is_only_one[0] == 1:
-                    self.person1.centerX, self.person1.centerY = self.getCenter(temp[0][1])
-                    self.person1.index_stack.append(temp[0][0])
-                    self.draw_box(frame_data, self.person1.index_stack[0], colors, temp[0][1])
-                    self.person1.is_used = 1
-                    match_person += 1
-                elif is_only_one[0] == 2:
-                    self.person2.centerX, self.person2.centerY = self.getCenter(temp[0][1])
-                    self.person2.index_stack.append(temp[0][0])
-                    self.draw_box(frame_data, self.person2.index_stack[0], colors, temp[0][1])
-                    self.person2.is_used = 1
-                    match_person += 1
-                elif is_only_one[0] == 3:
-                    self.person3.centerX, self.person3.centerY = self.getCenter(temp[0][1])
-                    self.person3.index_stack.append(temp[0][0])
-                    self.draw_box(frame_data, self.person3.index_stack[0], colors, temp[0][1])
-                    self.person3.is_used = 1
-                    match_person += 1
-                elif is_only_one[0] == 4:
-                    self.person4.centerX, self.person4.centerY = self.getCenter(temp[0][1])
-                    self.person4.index_stack.append(temp[0][0])
-                    self.draw_box(frame_data, self.person4.index_stack[0], colors, temp[0][1])
-                    self.person4.is_used = 1
-                    match_person += 1
-        elif match_person == 3 and len(temp) >= 2:
-            # Apply center location Euclidean Distance
-            for tmp in temp:
-                EUD_min = self.get_EuclideanDistance(tmp)
-                self.draw_box(frame_data, EUD_min, colors, tmp[1])
+                self.person1.centerX, self.person1.centerY = self.getCenter(unmatched[0][1])
+                self.person1.index_stack.append(unmatched[0][0])
+                self.draw_box(frame_data, self.person1.index_stack[0], colors, unmatched[0][1])
+                self.person1.is_used = 1
                 match_person += 1
-                break
+            elif self.person2.is_used == 0:
+                self.person2.centerX, self.person2.centerY = self.getCenter(unmatched[0][1])
+                self.person2.index_stack.append(unmatched[0][0])
+                self.draw_box(frame_data, self.person2.index_stack[0], colors, unmatched[0][1])
+                self.person2.is_used = 1
+                match_person += 1
+            elif self.person3.is_used == 0:
+                self.person3.centerX, self.person3.centerY = self.getCenter(unmatched[0][1])
+                self.person3.index_stack.append(unmatched[0][0])
+                self.draw_box(frame_data, self.person3.index_stack[0], colors, unmatched[0][1])
+                self.person3.is_used = 1
+                match_person += 1
+            elif self.person4.is_used == 0:
+                self.person4.centerX, self.person4.centerY = self.getCenter(unmatched[0][1])
+                self.person4.index_stack.append(unmatched[0][0])
+                self.draw_box(frame_data, self.person4.index_stack[0], colors, unmatched[0][1])
+                self.person4.is_used = 1
+                match_person += 1
+            else:
+                print("ERROR : Something problem on object.is_used")
 
         # Missed Person Over 2
-        if match_person < 3 and len(temp) >= 1:
-            for tmp in temp:
-                # Apply center location Euclidean Distance
-                EUD_min = self.get_EuclideanDistance(tmp)
-                self.draw_box(frame_data, EUD_min, colors, tmp[1])
+        if match_person < 3 and len(unmatched) >= 2:
+            for unmatch in unmatched:
+                if match_person >= 3:
+                    break
+                else:
+                    # Apply center location Euclidean Distance
+                    EUD_min = self.get_EuclideanDistance(unmatch)
+                    self.draw_box(frame_data, EUD_min, colors, unmatch[1])
+                    match_person += 1
+
+        if match_person == 3 and len(unmatched) >= 1:
+            # Apply center location Euclidean Distance
+            for unmatch in unmatched:
+                EUD_min = self.get_EuclideanDistance(unmatch)
+                self.draw_box(frame_data, EUD_min, colors, unmatch[1])
                 match_person += 1
                 break
+
 
 
         # if enable info flag then print details about each track
