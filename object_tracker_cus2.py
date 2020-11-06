@@ -330,25 +330,15 @@ class Apply_Models(object):
                 print("ERROR : Something problem on object.is_used")
 
         # Missed Person Over 2
-        if match_person < 3 and len(unmatched) >= 2:
+        if match_person <= 3 and len(unmatched) >= 1:
             for unmatch in unmatched:
-                if match_person >= 3:
+                if match_person >= 4:
                     break
                 else:
                     # Apply center location Euclidean Distance
                     EUD_min = self.get_EuclideanDistance(unmatch)
                     self.draw_box(frame_data, EUD_min, colors, unmatch[1])
                     match_person += 1
-
-        if match_person == 3 and len(unmatched) >= 1:
-            # Apply center location Euclidean Distance
-            for unmatch in unmatched:
-                EUD_min = self.get_EuclideanDistance(unmatch)
-                self.draw_box(frame_data, EUD_min, colors, unmatch[1])
-                match_person += 1
-                break
-
-
 
         # if enable info flag then print details about each track
         if info:
