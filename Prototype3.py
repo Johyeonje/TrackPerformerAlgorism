@@ -49,6 +49,7 @@ def grab(cam, queue, width, height, fps):
 
         black_tile[int(start_Y):int(height_Y)+1, int(start_X):int(width_X)+1] = \
             img[int(start_Y):int(height_Y)+1, int(start_X):int(width_X)+1]
+
         # img = img[int(start_Y):int(height_Y)+1, int(start_X):int(width_X)+1]
         # cv2.imshow('pyqt1', img)
 
@@ -57,11 +58,11 @@ def grab(cam, queue, width, height, fps):
                 # print(start_X, width_X, start_Y, height_Y)
                 apply.set_tracker()
                 reset = 0
-            img = apply.main(img)
+            black_tile = apply.main(black_tile)
         else:
             reset = 1
 
-        frame["img"] = img
+        frame["img"] = black_tile
 
         if queue.qsize() < 10:
             queue.put(frame)
