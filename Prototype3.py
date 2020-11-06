@@ -43,7 +43,11 @@ def grab(cam, queue, width, height, fps):
         frame = {}
         capture.grab()
         retval, img = capture.retrieve(0)
-        img = img[int(start_Y):int(height_Y)+1, int(start_X):int(width_X)+1]
+        black_tile = [[0 for w_ in range(img.shape[0])] for h_ in range(img.shape[1])]
+
+        black_tile[int(start_Y):int(height_Y)+1, int(start_X):int(width_X)+1] = \
+            img[int(start_Y):int(height_Y)+1, int(start_X):int(width_X)+1]
+        # img = img[int(start_Y):int(height_Y)+1, int(start_X):int(width_X)+1]
         # cv2.imshow('pyqt1', img)
 
         if state == 1:
