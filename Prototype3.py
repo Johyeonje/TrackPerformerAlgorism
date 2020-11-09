@@ -116,6 +116,11 @@ class MyWindowClass(QMainWindow, form_class):
         self.timer.timeout.connect(self.update_frame)
         self.timer.start(1)
 
+        self.x_start.textChanged.connect(self.lineEditChanged1)
+        self.x_end.textChanged.connect(self.lineEditChanged2)
+        self.y_start.textChanged.connect(self.lineEditChanged3)
+        self.y_end.textChanged.connect(self.lineEditChanged4)
+
     def initUI(self):
 
         camAction = QAction('Use Cam', self)
@@ -136,28 +141,23 @@ class MyWindowClass(QMainWindow, form_class):
         filemenu.addAction(camAction)
         filemenu.addAction(exitAction)
 
-        self.x_start.textChanged.connect(self.lineEditChanged1)
-        self.x_end.textChanged.connect(self.lineEditChanged2)
-        self.y_start.textChanged.connect(self.lineEditChanged3)
-        self.y_end.textChanged.connect(self.lineEditChanged4)
-
     def lineEditChanged1(self):
-        if not len(self.x_start.text()) != 0:
+        if len(self.x_start.text()) != 0:
             if int(self.x_start.text()) < 0:
                 self.x_start.setText('0')
 
     def lineEditChanged2(self):
-        if not len(self.x_end.text()) != 0:
+        if len(self.x_end.text()) != 0:
             if int(self.x_end.text()) > cap_X:
                 self.x_end.setText(str(cap_X))
 
     def lineEditChanged3(self):
-        if not len(self.y_start.text()) != 0:
+        if len(self.y_start.text()) != 0:
             if int(self.y_start.text()) < 0:
                 self.y_start.setText('0')
 
     def lineEditChanged4(self):
-        if not len(self.y_end.text()) != 0:
+        if len(self.y_end.text()) != 0:
             if int(self.y_end.text()) > cap_Y:
                 self.y_end.setText(str(cap_Y))
 
