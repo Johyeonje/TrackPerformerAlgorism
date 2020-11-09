@@ -2,14 +2,11 @@ import os
 
 # comment out below line to enable tensorflow logging outputs
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-import time
 import tensorflow as tf
 
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
 if len(physical_devices) > 0:
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
-from absl import app, flags, logging
-from absl.flags import FLAGS
 import core.utils as utils
 from core.yolov4 import filter_boxes
 from tensorflow.python.saved_model import tag_constants
@@ -20,6 +17,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 # from tensorflow.compat.v1 import ConfigProto
 # from tensorflow.compat.v1 import InteractiveSession
+
 # deep sort imports
 from deep_sort import preprocessing, nn_matching
 from deep_sort.detection import Detection
@@ -151,7 +149,7 @@ class Apply_Models(object):
                       color, -1)
         cv2.putText(frame_data, str(track_id),
                     (int(bbox[0]), int(bbox[1] - 10)), 0, 0.75,
-                    (255, 255, 255), 2)
+                    (0, 0, 0), 2)
         # cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1] - 30)),
         #               (int(bbox[0]) + (len(class_name) + len(str(track_id))) * 17, int(bbox[1])),
         #               color, -1)
