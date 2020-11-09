@@ -142,19 +142,14 @@ class MyWindowClass(QMainWindow, form_class):
         self.y_end.textChanged.connect(self.lineEditChanged)
 
     def lineEditChanged(self):
-        if not len(self.x_start.text()) != 0:
+        if len(self.x_start.text()) != 0 and len(self.x_end.text()) != 0 and \
+                len(self.y_start.text()) != 0 and len(self.y_end.text()) != 0:
             if int(self.x_start.text()) < 0:
                 self.x_start.setText('0')
-
-        if not len(self.x_end.text()) != 0:
             if int(self.x_end.text()) > cap_X:
                 self.x_end.setText(str(cap_X))
-
-        if not len(self.y_start.text()) != 0:
             if int(self.y_start.text()) < 0:
                 self.y_start.setText('0')
-
-        if not len(self.y_end.text()) != 0:
             if int(self.y_end.text()) > cap_Y:
                 self.y_end.setText(str(cap_Y))
 
