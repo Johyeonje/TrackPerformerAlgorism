@@ -136,7 +136,7 @@ class Apply_Models(object):
         return compare_list[min_idx][0]
 
     def draw_box(self, frame_data, track_id, colors, bbox, class_name='person'):
-        color = colors[int(track_id) * 8 % len(colors)]
+        color = [255, 0, 0]
         color = [j * 255 for j in color]
         cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
         cv2.rectangle(frame_data, (int(bbox[0]), int(bbox[1] - 30)),
