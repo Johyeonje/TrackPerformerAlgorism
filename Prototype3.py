@@ -30,13 +30,13 @@ def grab(cam, queue, width, height, fps):
     global running, start_X, width_X, start_Y, height_Y, cap_X, cap_Y
 
     capture = cv2.VideoCapture(cam)
+    capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+    capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+    capture.set(cv2.CAP_PROP_FPS, fps)
     width_X = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
     cap_X = width_X
     height_Y = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
     cap_Y = height_Y
-    # capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
-    # capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
-    # capture.set(cv2.CAP_PROP_FPS, fps)
 
     apply = Apply_Models()
     reset = 1
@@ -234,7 +234,7 @@ class MyWindowClass(QMainWindow, form_class):
         global running
         running = False
 
-capture_thread = threading.Thread(target=grab, args=('./data/video/tttt1.mp4', q, 1920, 1080, 10))
+capture_thread = threading.Thread(target=grab, args=('./data/video/tttt1.mp4', q))
 
 
 if __name__ == '__main__':
