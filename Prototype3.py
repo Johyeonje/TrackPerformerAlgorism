@@ -19,10 +19,11 @@ running = False
 capture_thread = None
 form_class = uic.loadUiType("simple3.ui")[0]
 q = queue.Queue()
-state = 0
+state = 1
 start_X, start_Y = 0, 0
 width_X, height_Y = 1920, 1080
 cap_X, cap_Y = 0, 0
+font = 20
 
 
 def grab(cam, queue, width, height, fps):
@@ -101,7 +102,7 @@ class MyWindowClass(QMainWindow, form_class):
         self.initUI()
 
         self.startButton.clicked.connect(self.start_clicked)
-        self.offButton.setChecked(True)
+        self.onButton.setChecked(True)
         self.onButton.clicked.connect(self.on_button_clicked)
         self.offButton.clicked.connect(self.off_button_clicked)
 

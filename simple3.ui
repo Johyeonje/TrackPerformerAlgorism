@@ -33,7 +33,7 @@
      </sizepolicy>
     </property>
     <property name="title">
-     <string>Video</string>
+     <string>Display</string>
     </property>
     <widget class="QWidget" name="ImgWidget" native="true">
      <property name="geometry">
@@ -56,7 +56,13 @@
      </rect>
     </property>
     <property name="text">
-     <string>Start video</string>
+     <string>Cam Capture</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
     </property>
    </widget>
    <widget class="QGroupBox" name="radioBox_2">
@@ -199,7 +205,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Start</string>
+      <string>On</string>
      </property>
     </widget>
     <widget class="QRadioButton" name="offButton">
@@ -212,7 +218,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Stop</string>
+      <string>Off</string>
      </property>
     </widget>
    </widget>
