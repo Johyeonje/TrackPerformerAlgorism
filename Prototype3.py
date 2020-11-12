@@ -23,7 +23,7 @@ state = 1
 start_X, start_Y = 0, 0
 width_X, height_Y = 1920, 1080
 cap_X, cap_Y = 0, 0
-font = 20
+
 
 
 def grab(cam, queue, width, height, fps):
@@ -34,9 +34,14 @@ def grab(cam, queue, width, height, fps):
     cap_X = width_X
     height_Y = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
     cap_Y = height_Y
-    # capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
-    # capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
-    # capture.set(cv2.CAP_PROP_FPS, fps)
+
+    frame_size = (width_X, height_Y)
+    codec = cv2.VideoWriter_fourcc(*'DIVX')
+    out = cv2.VideoWriter('./outputs/top_view_cut.avi', codec, fps, frame_size)
+
+    capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+    capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+    capture.set(cv2.CAP_PROP_FPS, fps)
 
     apply = Apply_Models()
     reset = 1
@@ -62,6 +67,7 @@ def grab(cam, queue, width, height, fps):
         else:
             reset = 1
 
+        out.write(img)
         frame["img"] = img
 
         if queue.qsize() < 10:
@@ -212,7 +218,9 @@ class MyWindowClass(QMainWindow, form_class):
         global running
         running = False
 
-capture_thread = threading.Thread(target=grab, args=('./data/video/tttt1.mp4', q, 1920, 1080, 10))
+# capture_thread = threading.Thread(target=grab, args=('./data/video/top_view_cut_original.mp4', q, 1920, 1080, 10))
+capture_thread = threading.Thread(target=grab, args=(0, q, 1920, 1080, 10))
+
 
 
 if __name__ == '__main__':
