@@ -345,6 +345,7 @@ class Apply_Models(object):
                 else:
                     # Apply center location Euclidean Distance
                     EUD_min = self.get_EuclideanDistance(unmatch)
+                    print(EUD_min)
                     if not len(EUD_min) == 0:
                         self.draw_box(frame_data, EUD_min, colors, unmatch[1])
                         match_person += 1
