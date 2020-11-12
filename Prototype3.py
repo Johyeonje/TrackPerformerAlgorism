@@ -17,7 +17,7 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog, QHBoxLayout, QPushButton
 
 running = False
 capture_thread = None
-form_class = uic.loadUiType("simple3.ui")[0]
+form_class = uic.loadUiType("Design.ui")[0]
 q = queue.Queue()
 state = 1
 start_X, start_Y = 0, 0
