@@ -30,6 +30,11 @@ def grab(cam, queue, width, height, fps):
     global running, start_X, width_X, start_Y, height_Y, cap_X, cap_Y
 
     capture = cv2.VideoCapture(cam)
+
+    capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+    capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+    capture.set(cv2.CAP_PROP_FPS, fps)
+
     width_X = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
     height_Y = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
     cap_X = width_X
@@ -41,9 +46,6 @@ def grab(cam, queue, width, height, fps):
     codec = cv2.VideoWriter_fourcc(*'DIVX')
     out = cv2.VideoWriter('./outputs/top_view_cut.avi', codec, fps, frame_size)
 
-    capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
-    capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
-    capture.set(cv2.CAP_PROP_FPS, fps)
 
     apply = Apply_Models()
     reset = 1
