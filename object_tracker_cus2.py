@@ -90,48 +90,51 @@ class Apply_Models(object):
 
         # Get center location from unmatched objects
         nmtX, nmtY = self.getCenter(unmatch[1])
+        try:
+            # Apply center location Euclidean Distance
+            if self.person1.is_used == 0 and self.person1.centerX != None:
+                gap = np.sqrt(pow(self.person1.centerX - nmtX, 2) + pow(self.person1.centerY - nmtY, 2))
+                compare_list.append([1, unmatch[0], gap])
+            if self.person2.is_used == 0 and self.person2.centerX != None:
+                gap = np.sqrt(pow(self.person2.centerX - nmtX, 2) + pow(self.person2.centerY - nmtY, 2))
+                compare_list.append([2, unmatch[0], gap])
+            if self.person3.is_used == 0 and self.person3.centerX != None:
+                gap = np.sqrt(pow(self.person3.centerX - nmtX, 2) + pow(self.person3.centerY - nmtY, 2))
+                compare_list.append([3, unmatch[0], gap])
+            if self.person4.is_used == 0 and self.person4.centerX != None:
+                gap = np.sqrt(pow(self.person4.centerX - nmtX, 2) + pow(self.person4.centerY - nmtY, 2))
+                compare_list.append([4, unmatch[0], gap])
 
-        # Apply center location Euclidean Distance
-        if self.person1.is_used == 0 and self.person1.centerX != None:
-            gap = np.sqrt(pow(self.person1.centerX - nmtX, 2) + pow(self.person1.centerY - nmtY, 2))
-            compare_list.append([1, unmatch[0], gap])
-        if self.person2.is_used == 0 and self.person2.centerX != None:
-            gap = np.sqrt(pow(self.person2.centerX - nmtX, 2) + pow(self.person2.centerY - nmtY, 2))
-            compare_list.append([2, unmatch[0], gap])
-        if self.person3.is_used == 0 and self.person3.centerX != None:
-            gap = np.sqrt(pow(self.person3.centerX - nmtX, 2) + pow(self.person3.centerY - nmtY, 2))
-            compare_list.append([3, unmatch[0], gap])
-        if self.person4.is_used == 0 and self.person4.centerX != None:
-            gap = np.sqrt(pow(self.person4.centerX - nmtX, 2) + pow(self.person4.centerY - nmtY, 2))
-            compare_list.append([4, unmatch[0], gap])
+            # select minimum index
+            if compare_list:
+                compare_array = np.array(compare_list)
+                search_min = np.swapaxes(compare_array, axis1=0, axis2=1)
+                min_idx = np.argmin(search_min[-1])
 
-        # select minimum index
-        if compare_list:
-            compare_array = np.array(compare_list)
-            search_min = np.swapaxes(compare_array, axis1=0, axis2=1)
-            min_idx = np.argmin(search_min[-1])
+            # Matching minimum index
+            if compare_list[min_idx][0] == 1:
+                self.person1.is_used = 1
+                self.person1.index_stack.append(compare_list[min_idx][1])
+                # print('switch with XY-', self.person1.index_stack)
+            elif compare_list[min_idx][0] == 2:
+                self.person2.is_used = 1
+                self.person2.index_stack.append(compare_list[min_idx][1])
+                # print('switch with XY-', self.person2.index_stack)
+            elif compare_list[min_idx][0] == 3:
+                self.person3.is_used = 1
+                self.person3.index_stack.append(compare_list[min_idx][1])
+                # print('switch with XY-', self.person3.index_stack)
+            elif compare_list[min_idx][0] == 4:
+                self.person4.is_used = 1
+                self.person4.index_stack.append(compare_list[min_idx][1])
+                # print('switch with XY-', self.person4.index_stack)
+            else:
+                print("something problem in matching with center")
 
-        # Matching minimum index
-        if compare_list[min_idx][0] == 1:
-            self.person1.is_used = 1
-            self.person1.index_stack.append(compare_list[min_idx][1])
-            # print('switch with XY-', self.person1.index_stack)
-        elif compare_list[min_idx][0] == 2:
-            self.person2.is_used = 1
-            self.person2.index_stack.append(compare_list[min_idx][1])
-            # print('switch with XY-', self.person2.index_stack)
-        elif compare_list[min_idx][0] == 3:
-            self.person3.is_used = 1
-            self.person3.index_stack.append(compare_list[min_idx][1])
-            # print('switch with XY-', self.person3.index_stack)
-        elif compare_list[min_idx][0] == 4:
-            self.person4.is_used = 1
-            self.person4.index_stack.append(compare_list[min_idx][1])
-            # print('switch with XY-', self.person4.index_stack)
-        else:
-            print("something problem in matching with center")
+            return compare_list[min_idx][0]
+        except:
+            return []
 
-        return compare_list[min_idx][0]
 
     def draw_box(self, frame_data, track_id, colors, bbox, class_name='person'):
         if int(track_id) == 1:
@@ -342,8 +345,9 @@ class Apply_Models(object):
                 else:
                     # Apply center location Euclidean Distance
                     EUD_min = self.get_EuclideanDistance(unmatch)
-                    self.draw_box(frame_data, EUD_min, colors, unmatch[1])
-                    match_person += 1
+                    if not len(EUD_min) == 0:
+                        self.draw_box(frame_data, EUD_min, colors, unmatch[1])
+                        match_person += 1
 
         # if enable info flag then print details about each track
         if info:
