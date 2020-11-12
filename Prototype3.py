@@ -34,6 +34,8 @@ def grab(cam, queue, width, height, fps):
     height_Y = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
     cap_X = width_X
     cap_Y = height_Y
+    width_X = cap_X
+    height_Y = cap_Y
 
     frame_size = (width_X, height_Y)
     codec = cv2.VideoWriter_fourcc(*'DIVX')
