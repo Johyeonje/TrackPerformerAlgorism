@@ -31,8 +31,8 @@ def grab(cam, queue, width, height, fps):
 
     capture = cv2.VideoCapture(cam)
     width_X = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
-    cap_X = width_X
     height_Y = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    cap_X = width_X
     cap_Y = height_Y
 
     frame_size = (width_X, height_Y)
@@ -173,8 +173,6 @@ class MyWindowClass(QMainWindow, form_class):
             start_X = self.x_start.text()
 
         if len(self.x_end.text()):
-            if int(self.x_end.text()) > cap_X:
-                self.x_end.setText(str(cap_X))
             width_X = self.x_end.text()
         else:
             self.x_end.setText(str(cap_X))
@@ -187,8 +185,6 @@ class MyWindowClass(QMainWindow, form_class):
             start_Y = self.y_start.text()
 
         if len(self.y_end.text()):
-            if int(self.y_end.text()) > cap_Y:
-                self.y_end.setText(str(cap_Y))
             height_Y = self.y_end.text()
         else:
             self.y_end.setText(str(cap_Y))
