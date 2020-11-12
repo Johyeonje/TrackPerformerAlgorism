@@ -7,7 +7,7 @@ __license__ = "GPL"
 
 import tensorflow as tf
 from deep_sort import nn_matching
-from object_tracker_cus2 import Apply_Models
+from CoreTech import Apply_Models
 from deep_sort.tracker import Tracker
 
 import queue
