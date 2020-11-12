@@ -132,7 +132,8 @@ class Apply_Models(object):
                 print("something problem in matching with center")
 
             return compare_list[min_idx][0]
-        except:
+
+        except UnboundLocalError:
             return []
 
 
@@ -346,7 +347,7 @@ class Apply_Models(object):
                     # Apply center location Euclidean Distance
                     EUD_min = self.get_EuclideanDistance(unmatch)
                     print(EUD_min)
-                    if not len(EUD_min) == 0:
+                    if not len(str(EUD_min)) == 0:
                         self.draw_box(frame_data, EUD_min, colors, unmatch[1])
                         match_person += 1
 
