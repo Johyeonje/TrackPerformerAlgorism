@@ -1,7 +1,11 @@
+# Main Code   
+실행 파일 : TrackingProgram.py
+핵심 코드 : CoreTech
+
 # TrackPerformerAlgorism Technical Document
 
-2020.11.13
-목차
+2020.11.13   
+목차   
 1.	프로젝트 요구사항 확인   
 1.1	개요   
 1.2	제안사항   
