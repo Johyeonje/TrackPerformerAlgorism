@@ -90,12 +90,12 @@
 5.1 Detected: 4, Tracking: 4, Unmatched: 0   
 6.1 Detected: >=5, Tracking: 4, Unmatched: >=1   
     
-그림1: 조건2에 대한 코드(CoreTech.py Line 282)   
+	그림1: 조건2에 대한 코드(CoreTech.py Line 282)   
     
 5.1.3 조건3: 매칭되지 않은 객체가 하나일 시1:1 매칭   
 5.2 Detected: 4, Tracking: 3, Unmatched: 1   
     
-그림2. 조건3에 대한 코드(CoreTech.py Line 309)   
+	그림2. 조건3에 대한 코드(CoreTech.py Line 309)   
 5.1.4 조건4: 두명 이상 매칭되어있지않으면 유클리드 거리 비교로 매칭   
 5.3 Detected: 4, Tracking: 2, Unmatched: 2   
 5.4 Detected: 4, Tracking: 1, Unmatched: 3   
@@ -113,9 +113,10 @@
 6.2 평가 방식   
 인식에 대한 개선은 프로젝트의 방향성에서 제외했기 때문에 추적 기준을 인식 객체 수로 잡고, 인식 객체를 얼마나 성공적으로 추적했는지 측정   
     
-그림5: 평가지표 TPD(Tracking object per Detection object)
+	그림5: 평가지표 TPD(Tracking object per Detection object)
     
-그림6: TPDevaluate code (TPD_evaluate.py)   
+	그림6: TPDevaluate code (TPD_evaluate.py)   
+	  
 6.3 평가 함수화   
 평가지표 측정을 위한 자동화 코드를 작업했으나, 서로 다른 객체간의 인덱스 교환현상이 고질적인 문제로 자리잡아 인식된 인덱스 만으로는 측정이 불가하고 객관적이지 못하다 판단해 미적용. 평가지표 측정을 위해서 프레임별 체크가 별도로 필요   
 6.4평가 비교군 선정   
