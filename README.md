@@ -1,6 +1,6 @@
 # Main Code   
-실행 파일 : TrackingProgram.py
-핵심 코드 : CoreTech
+실행 파일 : TrackingProgram.py   
+핵심 코드 : CoreTech.py
 
 # TrackPerformerAlgorism Technical Document
 
